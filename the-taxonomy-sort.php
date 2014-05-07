@@ -152,7 +152,12 @@ class TheTaxonomySort {
 		// we do not need empty objects
 		if( empty( $objects ) ) return $objects;
 
-		$taxonomy_name = $objects[0]->taxonomy;
+		$first_element = reset($objects);
+
+		// ensure taxonomy exists first (will break if 0 terms are defined)
+		if ( ! property_exists($first_element, 'taxonomy') ) return $objects;
+
+		$taxonomy_name = reset($objects)->taxonomy;
 
 		// check if taxonomy is sortable
 		if ( count($this->enabled_taxonomies) == 0 ) {
